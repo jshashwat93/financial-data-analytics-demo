@@ -5,6 +5,7 @@ from confluent_kafka.schema_registry.avro import AvroSerializer
 import os
 import requests
 import time
+import logging
 
 # Run the following in your terminal before running this script:
 # export BOOTSTRAP_SERVERS=<Bootstrap Server>
@@ -45,40 +46,62 @@ count_avro_serializer = AvroSerializer(schema_registry_client = schema_registry_
                                         to_dict = None)
 
 
-import requests
-import time
-import logging
+
 
 logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 
 url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&price_change_percentage=1h"
 
+# Dynamic backoff mechanism
+polling_interval = 7
+backoff_factor = 2
+max_polling_interval = 60
+
 while True:
     try:
         response = requests.get(url)
-        data = response.json()
 
-        for item in data:
-            try:
-                crypto_data = {
-                    "name": item["name"],
-                    "price": item["current_price"],
-                    "one_hour_price_change": item["price_change_percentage_1h_in_currency"]
-                }
-            except Exception as e:
-                logging.error(f"Error processing data: {str(e)}. Data: {item}")
+        if response.status_code == 200:
+            data = response.json()
 
+            if isinstance(data, list):
+                for item in data:
+                    try:
+                        crypto_data = {
+                            "name": item["name"],
+                            "price": item["current_price"],
+                            "one_hour_price_change": item["price_change_percentage_1h_in_currency"]
+                        }
 
-        producer.produce("coingecko-btc", 
-                         key="btc", 
-                         value=count_avro_serializer(crypto_data, SerializationContext("coingecko-btc", MessageField.VALUE)))
-        producer.poll(10000)
-        producer.flush()
+                    except Exception as e:
+                        logging.error(f"Error processing data: {str(e)}. Data: {item}")
 
-        time.sleep(5)  # Wait for 1 second(s) before fetching data again
+                producer.produce("coingecko-btc", 
+                                 key="btc", 
+                                 value=count_avro_serializer(crypto_data, SerializationContext("coingecko-btc", MessageField.VALUE)))
+                producer.poll(10000)
+                producer.flush()
+
+                # Reset the polling interval after successful fetch and processing
+                polling_interval = 7
+
+            else:
+                logging.error(f"Unexpected data format: {data}")
+
+        elif response.status_code == 429:
+            # Double the polling interval when the rate limit is exceeded
+            polling_interval *= backoff_factor
+            polling_interval = min(polling_interval, max_polling_interval)
+            logging.error(f"Rate limit exceeded. Backing off for {polling_interval} seconds.")
+
+        else:
+            logging.error(f"Unexpected status code: {response.status_code}. Response: {response.text}")
 
     except requests.exceptions.RequestException as e:
         logging.error(f"Error fetching data from API: {str(e)}")
-        
+
     except Exception as e:
-        print(f"Error fetching data: {str(e)}")
+        logging.error(f"Unexpected error: {str(e)}")
+
+    time.sleep(polling_interval)
+
