@@ -53,8 +53,8 @@ logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %
 url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&price_change_percentage=1h"
 
 # Dynamic backoff mechanism
-polling_interval = 7
-backoff_factor = 2
+polling_interval = 10
+backoff_factor = 6
 max_polling_interval = 60
 
 while True:
@@ -83,7 +83,7 @@ while True:
                 producer.flush()
 
                 # Reset the polling interval after successful fetch and processing
-                polling_interval = 7
+                polling_interval = 10
 
             else:
                 logging.error(f"Unexpected data format: {data}")
