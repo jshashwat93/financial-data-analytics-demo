@@ -1,0 +1,9 @@
+create table FIVE_MINUTE_AVERAGE_PRICE_COMPACT as select
+composite_key,
+LATEST_BY_OFFSET(cryptocurreny_name) cryptocurreny_name,
+LATEST_BY_OFFSET(FIVE_MINUTE_AVERAGE_PRICE) FIVE_MINUTE_AVERAGE_PRICE,
+LATEST_BY_OFFSET(END_PERIOD) end_period,
+LATEST_BY_OFFSET(START_PERIOD) START_PERIOD
+from AVERAGE_PRICE_STREAM_REKEYED
+group by composite_key
+emit changes;
