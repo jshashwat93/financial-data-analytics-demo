@@ -2,6 +2,7 @@ from confluent_kafka import Producer
 from confluent_kafka.serialization import SerializationContext, MessageField
 from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroSerializer
+from confluent_kafka.admin import AdminClient, NewTopic
 import os
 import requests
 import time
@@ -43,6 +44,18 @@ schema_str = """
 count_avro_serializer = AvroSerializer(schema_registry_client = schema_registry_client,
                                         schema_str =  schema_str,
                                         to_dict = None)
+
+admin_client = AdminClient({"bootstrap.servers": bootstrap_servers,
+                     'security.protocol': 'SASL_SSL', 
+                     'sasl.mechanisms': 'PLAIN', 
+                     'sasl.username': sasl_username, 
+                     'sasl.password': sasl_password})
+
+admin_client.create_topics([NewTopic(
+        "coinbase-btc",
+        num_partitions=1,
+        replication_factor=3
+)])
 
 while True:
     url = "https://api.coinbase.com/v2/prices/BTC-USD/spot"

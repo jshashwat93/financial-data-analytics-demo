@@ -2,6 +2,7 @@ from confluent_kafka import Producer
 from confluent_kafka.serialization import SerializationContext, MessageField
 from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.avro import AvroSerializer
+from confluent_kafka.admin import AdminClient, NewTopic
 import os
 import requests
 import time
@@ -56,6 +57,18 @@ url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoi
 polling_interval = 10
 backoff_factor = 6
 max_polling_interval = 60
+
+admin_client = AdminClient({"bootstrap.servers": bootstrap_servers,
+                     'security.protocol': 'SASL_SSL', 
+                     'sasl.mechanisms': 'PLAIN', 
+                     'sasl.username': sasl_username, 
+                     'sasl.password': sasl_password})
+
+admin_client.create_topics([NewTopic(
+        "coingecko-btc",
+        num_partitions=1,
+        replication_factor=3
+)])
 
 while True:
     try:

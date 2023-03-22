@@ -43,7 +43,6 @@ echo -e "\033[1;96m  - Volatility analysis\033[0m"
 echo -e "\033[1;92min a hands-on environment! 🌟\033[0m"
 echo -e "\033[1;33m================================================================================\033[0m"
 
-
 python coinbase-btc.py & python coingecko-btc.py
 
 wait
