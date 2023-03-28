@@ -2,7 +2,7 @@ create table FIVE_MINUTE_AVERAGE_PRICE_COMPACTED
 WITH (KAFKA_TOPIC='imply_five_minute_average_price_windowed')
 as select
 composite_key,
-LATEST_BY_OFFSET(cryptocurreny_name) cryptocurreny_name,
+LATEST_BY_OFFSET(cryptocurrency_name) cryptocurrency_name,
 LATEST_BY_OFFSET(FIVE_MINUTE_AVERAGE_PRICE) FIVE_MINUTE_AVERAGE_PRICE,
 LATEST_BY_OFFSET(END_PERIOD) end_period,
 LATEST_BY_OFFSET(START_PERIOD) START_PERIOD,
