@@ -1,9 +1,12 @@
-create table FIVE_MINUTE_AVERAGE_PRICE_COMPACT as select
+create table FIVE_MINUTE_AVERAGE_PRICE_COMPACTED 
+WITH (KAFKA_TOPIC='imply_five_minute_average_price_windowed')
+as select
 composite_key,
 LATEST_BY_OFFSET(cryptocurreny_name) cryptocurreny_name,
 LATEST_BY_OFFSET(FIVE_MINUTE_AVERAGE_PRICE) FIVE_MINUTE_AVERAGE_PRICE,
 LATEST_BY_OFFSET(END_PERIOD) end_period,
-LATEST_BY_OFFSET(START_PERIOD) START_PERIOD
+LATEST_BY_OFFSET(START_PERIOD) START_PERIOD,
+latest_by_offset(event_timestamp) event_timestamp
 from AVERAGE_PRICE_STREAM_REKEYED
 group by composite_key
 emit changes;
