@@ -1,3 +1,6 @@
-/terraform/*.tfstate
-/terraform/*.tfstate.backup
+/terraform/*.tfstate*
 /terraform/secrets.txt
+/terraform/.env
+/terraform/.terraform/
+/terraform/.terraform.lock.hcl
+
