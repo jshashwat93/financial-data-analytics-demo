@@ -5,6 +5,7 @@ Basic Steps (Work In Progress):
 
 Start:
 ```
+[Clone this repo]
 [Change directory to the repo "financial-data-analytics"]
 ./terraform/setup-confluent-cloud.sh
 docker build -t financial-data-analytics .
@@ -13,7 +14,8 @@ docker run -it --rm --name fdad-container -v $(pwd)/terraform/secrets.txt:/app/s
 
 Cleanup:
 ```
-control + c
+control + c [to exit Docker container if still running]
+[Change directory to the repo "financial-data-analytics"]
 ./terraform/destroy-confluent-cloud.sh [enter yes to confirm]
 rm -f terraform/.env
 ```
