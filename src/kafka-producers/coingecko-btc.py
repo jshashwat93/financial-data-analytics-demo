@@ -54,8 +54,8 @@ logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %
 url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin&price_change_percentage=1h"
 
 # Dynamic backoff mechanism
-polling_interval = 10
-backoff_factor = 6
+polling_interval = 5
+backoff_factor = 2
 max_polling_interval = 60
 
 admin_client = AdminClient({"bootstrap.servers": bootstrap_servers,
@@ -117,4 +117,3 @@ while True:
         logging.error(f"Unexpected error: {str(e)}")
 
     time.sleep(polling_interval)
-

@@ -70,11 +70,6 @@ while True:
                     value=count_avro_serializer(crypto_data, SerializationContext("coinbase-btc", MessageField.VALUE)))
         producer.poll(10000)
         producer.flush()
-        time.sleep(10)
+        time.sleep(5)
     else:
         print("Error: Unable to fetch data from Coinbase API.")
-
-
-    
-
-
