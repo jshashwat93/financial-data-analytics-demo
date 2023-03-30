@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check if we are already in the terraform directory by looking for main.tf
+if [ ! -f main.tf ]; then
+  # If main.tf is not found, change to the terraform directory
+  cd terraform
+fi
+
 # Source the environment variables from .env file
 if [ ! -f .env ]; then
   echo "Creating .env file..."
