@@ -96,7 +96,7 @@ while True:
                 producer.flush()
 
                 # Reset the polling interval after successful fetch and processing
-                polling_interval = 10
+                polling_interval = 5
 
             else:
                 logging.error(f"Unexpected data format: {data}")
