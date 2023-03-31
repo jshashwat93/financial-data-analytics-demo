@@ -109,7 +109,7 @@ resource "confluent_role_binding" "all-subjects-rb" {
   crn_pattern = "${confluent_schema_registry_cluster.essentials.resource_name}/subject=*"
 }
 
-resource "confluent_ksql_cluster" "example" {
+resource "confluent_ksql_cluster" "streaming-appliactions" {
   display_name = "StreamingApplication"
   csu          = 1
   kafka_cluster {
