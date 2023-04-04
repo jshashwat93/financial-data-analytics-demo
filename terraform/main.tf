@@ -109,7 +109,7 @@ resource "confluent_role_binding" "all-subjects-rb" {
   crn_pattern = "${confluent_schema_registry_cluster.essentials.resource_name}/subject=*"
 }
 
-resource "confluent_ksql_cluster" "streaming-appliactions" {
+resource "confluent_ksql_cluster" "streaming-applications" {
   display_name = "StreamingApplication"
   csu          = 1
   kafka_cluster {
@@ -126,4 +126,25 @@ resource "confluent_ksql_cluster" "streaming-appliactions" {
     confluent_role_binding.all-subjects-rb,
     confluent_schema_registry_cluster.essentials
   ]
+}
+
+resource "confluent_api_key" "ksqldb-api-key" {
+  display_name = "ksqldb-api-key"
+  description  = "KsqlDB API Key that is owned by service account"
+  disable_wait_for_ready = true
+  owner {
+    id          = confluent_service_account.service-account.id
+    api_version = confluent_service_account.service-account.api_version
+    kind        = confluent_service_account.service-account.kind
+  }
+
+  managed_resource {
+    id          = confluent_ksql_cluster.streaming-applications.id
+    api_version = confluent_ksql_cluster.streaming-applications.api_version
+    kind        = confluent_ksql_cluster.streaming-applications.kind
+
+    environment {
+      id = confluent_environment.demo.id
+    }
+  }
 }
