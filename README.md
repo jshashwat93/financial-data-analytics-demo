@@ -38,17 +38,23 @@ Now you have a Confluent Cloud API key and secret that you can use in your proje
 
 2.2. Clone the repository:
 
-```git clone https://github.com/jshashwat93/financial-data-analytics-demo.git```
+```
+git clone https://github.com/jshashwat93/financial-data-analytics-demo.git
+```
 
 2.3. Change the directory to the cloned repository:
 
-```cd financial-data-analytics-demo/```
+```
+cd financial-data-analytics-demo/
+```
 
 ### Step 3: Set up the Confluent Cloud environment
 
 Run the Confluent Cloud setup script:
 
-```./terraform/setup-confluent-cloud.sh```
+```
+./terraform/setup-confluent-cloud.sh
+```
 
 
 When prompted, enter the Confluent Cloud API key and secret generated in Step 1.
@@ -57,7 +63,9 @@ When prompted, enter the Confluent Cloud API key and secret generated in Step 1.
 
 Build the Docker image for the project:
 
-```docker build -t financial-data-analytics .```
+```
+docker build -t financial-data-analytics .
+```
 
 
 ### Step 5: Run the Docker image
@@ -78,7 +86,9 @@ Follow these steps:
 2. Navigate to the project directory if you are not already there.
 3. Execute the script by running the following command:
 
-```./start-streaming-applications.sh```
+```
+./start-streaming-applications.sh
+```
 
 
 ---
@@ -93,9 +103,13 @@ Press Ctrl + C in the terminal where the Docker container is running.
 
 Run the following script and confirm by typing "yes" when prompted:
 
-```./terraform/destroy-confluent-cloud.sh```
+```
+./terraform/destroy-confluent-cloud.sh
+```
 
 
 **To delete the Confluent Cloud API key and secret file:**
 
-```rm -f terraform/.env```
+```
+rm -f terraform/.env
+```
