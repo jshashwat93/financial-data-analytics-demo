@@ -17,7 +17,20 @@ An interactive demo and workshop demonstrating real-time financial data analytic
 
 1.1. Sign up for a Confluent Cloud account at [https://confluent.cloud/](https://confluent.cloud/).
 
-1.2. Once logged in, navigate to the API Access section and create a new API key and secret. Make a note of these credentials, as you'll need them later.
+1.2. Verify your email address by clicking on the verification link sent to your inbox.
+
+1.3. Log in to your Confluent Cloud account.
+
+1.4. Once logged in, follow these steps to create a new Confluent Cloud API key and secret:
+
+- Click on the hamburger menu in the upper-left corner of the dashboard.
+- Select "Cloud API keys" from the menu.
+- Click on the "+ Add key" button.
+- Click on "Global access."
+- Enter a description for the key (optional), and click on the "Download and continue" button.
+- Ensure you securely store the downloaded file, as the key and secret are displayed only once during creation. You will need the generated API key and secret for later steps in the project.
+
+Now you have a Confluent Cloud API key and secret that you can use in your project.
 
 ### Step 2: Clone the GitHub repository
 
