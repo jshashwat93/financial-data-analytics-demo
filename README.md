@@ -95,11 +95,11 @@ Follow these steps:
 
 ## Cleaning up
 
-**To stop the Docker image:**
+- To stop the Docker image:
 
 Press Ctrl + C in the terminal where the Docker container is running.
 
-**To tear down the Confluent Cloud environment:**
+- To tear down the Confluent Cloud environment:
 
 Run the following script and confirm by typing "yes" when prompted:
 
@@ -107,8 +107,7 @@ Run the following script and confirm by typing "yes" when prompted:
 ./terraform/destroy-confluent-cloud.sh
 ```
 
-
-**To delete the Confluent Cloud API key and secret file:**
+- If you are done with using Terraform for this demo, remember to delete the Confluent Cloud API key and secret file:
 
 ```
 rm -f terraform/.env

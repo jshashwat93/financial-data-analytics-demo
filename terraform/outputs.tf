@@ -13,3 +13,12 @@ output "resource-ids" {
 
   sensitive = true
 }
+
+output "confluent_environment_id" {
+  value = confluent_environment.demo.id
+}
+
+output "confluent_kafka_cluster_id" {
+  value = confluent_kafka_cluster.basic.id
+}
+
