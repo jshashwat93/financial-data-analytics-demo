@@ -131,6 +131,7 @@ resource "confluent_ksql_cluster" "streaming-applications" {
 resource "confluent_api_key" "ksqldb-api-key" {
   display_name = "ksqldb-api-key"
   description  = "KsqlDB API Key that is owned by service account"
+  disable_wait_for_ready = true
   owner {
     id          = confluent_service_account.service-account.id
     api_version = confluent_service_account.service-account.api_version

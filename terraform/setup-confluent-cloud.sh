@@ -10,7 +10,7 @@ fi
 if [ ! -f .env ]; then
   echo "Creating .env file..."
   read -p "Please enter the Confluent Cloud API Key: " TF_VAR_confluent_cloud_api_key
-  read -p "Please enter the Confluent Cloud API Secret: " TF_VAR_confluent_cloud_api_secret
+  read -s -p "Please enter the Confluent Cloud API Secret: " TF_VAR_confluent_cloud_api_secret
 
   echo "TF_VAR_confluent_cloud_api_key=${TF_VAR_confluent_cloud_api_key}" > .env
   echo "TF_VAR_confluent_cloud_api_secret=${TF_VAR_confluent_cloud_api_secret}" >> .env
