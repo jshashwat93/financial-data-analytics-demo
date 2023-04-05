@@ -1,5 +1,5 @@
 CREATE STREAM coinbase_coingecko_join
-WITH (KAFKA_TOPIC='imply_coinbase_coingecko_join')
+WITH (KAFKA_TOPIC='output_coinbase_coingecko_join')
 AS SELECT 
      COINBASE_BTC_STREAM.NAME,
      coinbase_btc_stream.price AS coinbase_price, 

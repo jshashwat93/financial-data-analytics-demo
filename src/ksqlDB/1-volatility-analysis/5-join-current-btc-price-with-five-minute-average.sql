@@ -1,4 +1,5 @@
   CREATE STREAM current_price_join_average_price
+   WITH (KAFKA_TOPIC='internal_join_avg_price_and_current_price')
   AS SELECT 
 	COINGECKO_BTC_STREAM.NAME,
 	COINGECKO_BTC_STREAM.price,
