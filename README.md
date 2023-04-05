@@ -51,7 +51,9 @@ Build the Docker image for the project:
 
 Run the Docker image with the secrets file as an attached volume:
 
-```docker run -it --rm --name fdad-container -v $(pwd)/terraform/secrets.txt:/app/secrets.txt financial-data-analytics```
+```
+docker run -it --rm --name fdad-container -v $(pwd)/terraform/secrets.txt:/app/secrets.txt financial-data-analytics
+```
 
 ### Step 6: Run the streaming applications on ksqlDB
 
