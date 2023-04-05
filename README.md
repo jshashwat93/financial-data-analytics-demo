@@ -51,9 +51,19 @@ Build the Docker image for the project:
 
 Run the Docker image with the secrets file as an attached volume:
 
-```
-docker run -it --rm --name fdad-container -v $(pwd)/terraform/secrets.txt:/app/secrets.txt financial-data-analytics
-```
+```docker run -it --rm --name fdad-container -v $(pwd)/terraform/secrets.txt:/app/secrets.txt financial-data-analytics```
+
+### Step 6: Run the streaming applications on ksqlDB
+
+While the Docker container is running in the current terminal session, open a new terminal window or tab to run the streaming applications without stopping the container.
+
+Follow these steps:
+
+Open a new terminal window or tab.
+Navigate to the project directory if you are not already there.
+Execute the script by running the following command:
+
+```./start-streaming-applications.sh```
 
 
 ---
