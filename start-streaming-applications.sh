@@ -34,3 +34,11 @@ done
 
 echo -e "${GREEN}Arbitrage Opportunity streaming application is up and running!${NC}"
 
+QUERY="SELECT NAME, event_timestamp, VOLATILITY_PERCENT, START_PERIOD_TS, END_PERIOD_TS FROM btc_volatility_percent WHERE VOLATILITY_PERCENT > 0.01 EMIT CHANGES;"
+
+echo "Executing push query and keeping it running:"
+echo "${QUERY}" | docker run --init --rm -i confluentinc/ksqldb-cli:0.28.2 ksql \
+    -u "${KSQL_API_KEY}" \
+    -p "${KSQL_API_SECRET}" \
+    "${KSQL_ENDPOINT}"
+
