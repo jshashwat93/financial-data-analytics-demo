@@ -59,9 +59,9 @@ While the Docker container is running in the current terminal session, open a ne
 
 Follow these steps:
 
-Open a new terminal window or tab.
-Navigate to the project directory if you are not already there.
-Execute the script by running the following command:
+1. Open a new terminal window or tab.
+2. Navigate to the project directory if you are not already there.
+3. Execute the script by running the following command:
 
 ```./start-streaming-applications.sh```
 
