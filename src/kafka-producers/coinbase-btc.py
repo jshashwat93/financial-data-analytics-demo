@@ -6,6 +6,7 @@ from confluent_kafka.admin import AdminClient, NewTopic
 import os
 import requests
 import time
+import logging
 
 # Run the following in your terminal before running this script:
 # export BOOTSTRAP_SERVERS=<Bootstrap Server>
@@ -58,18 +59,23 @@ admin_client.create_topics([NewTopic(
 )])
 
 while True:
-    url = "https://api.coinbase.com/v2/prices/BTC-USD/spot"
-    response = requests.get(url)
+    try:
+        url = "https://api.coinbase.com/v2/prices/BTC-USD/spot"
+        response = requests.get(url)
 
-    if response.status_code == 200:
-        data = response.json()
-        crypto_data = {"name": "Bitcoin", "price": float(data["data"]["amount"])}
+        if response.status_code == 200:
+            data = response.json()
+            crypto_data = {"name": "Bitcoin", "price": float(data["data"]["amount"])}
 
-        producer.produce("coinbase-btc", 
-                    key="btc", 
-                    value=count_avro_serializer(crypto_data, SerializationContext("coinbase-btc", MessageField.VALUE)))
-        producer.poll(10000)
-        producer.flush()
-        time.sleep(5)
-    else:
-        print("Error: Unable to fetch data from Coinbase API.")
+            producer.produce("coinbase-btc", 
+                        key="btc", 
+                        value=count_avro_serializer(crypto_data, SerializationContext("coinbase-btc", MessageField.VALUE)))
+            producer.poll(10000)
+            producer.flush()
+            time.sleep(5)
+        else:
+            print("Error: Unable to fetch data from Coinbase API.")
+    except requests.exceptions.RequestException as e:
+        logging.error(f"Error occurred: {e}")
+        print("Error occurred. Retrying in 60 seconds...")
+        time.sleep(60)
